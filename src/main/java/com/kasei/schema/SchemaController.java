@@ -1,6 +1,7 @@
 package com.kasei.schema;
 
 
+import com.kasei.schema.model.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.jdbc.support.MetaDataAccessException;

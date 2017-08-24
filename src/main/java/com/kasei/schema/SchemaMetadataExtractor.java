@@ -1,5 +1,9 @@
 package com.kasei.schema;
 
+import com.kasei.schema.model.Column;
+import com.kasei.schema.model.DataType;
+import com.kasei.schema.model.Schema;
+import com.kasei.schema.model.Table;
 import org.springframework.jdbc.support.DatabaseMetaDataCallback;
 import org.springframework.jdbc.support.MetaDataAccessException;
 
@@ -21,16 +25,36 @@ public class SchemaMetadataExtractor implements DatabaseMetaDataCallback {
     @Override
     public Object processMetaData(DatabaseMetaData dbmd) throws SQLException, MetaDataAccessException {
         Schema schema = new Schema();
-        schema.driverName = dbmd.getDriverName();
-//        schema.schemaName = dbmd.getSchemas()
+        schema.setDriverName(dbmd.getDriverName());
+        // TO DO: should really call dbmd.getSchemas() and double check we are talking to the right schema
+        schema.setSchemaName(schemaName);
 
-        ResultSet tables = dbmd.getTables(null, schemaName, null, null);
-        List<String> tableNames = new ArrayList<>();
-        while (tables.next()) {
-            System.out.println("Found resultset row...");
-            tableNames.add(tables.getString("TABLE_NAME"));
-        }
-        schema.tables = tableNames;
+        schema.setTables(getTables(dbmd));
         return schema;
+    }
+
+    private List<Table> getTables(DatabaseMetaData dbmd) throws SQLException {
+        ResultSet tablesMetadata = dbmd.getTables(null, schemaName, null, null);
+        List<Table> tables = new ArrayList<>();
+        while (tablesMetadata.next()) {
+            Table table = new Table();
+            String tableName = tablesMetadata.getString("TABLE_NAME");
+            table.setName(tableName);
+            table.setColumns(getColumns(dbmd, schemaName, tableName));
+            tables.add(table);
+        }
+        return tables;
+    }
+
+    private List<Column> getColumns(DatabaseMetaData dbmd, String schemaName, String tableName) throws SQLException {
+        ResultSet columnsMetadata = dbmd.getColumns(null, schemaName, tableName, null);
+        List<Column> columns = new ArrayList<>();
+        while (columnsMetadata.next()) {
+            Column column = new Column();
+            column.setName(columnsMetadata.getString("COLUMN_NAME"));
+            column.setType(DataType.fromString(columnsMetadata.getString("DATA_TYPE")));
+            columns.add(column);
+        }
+        return columns;
     }
 }
