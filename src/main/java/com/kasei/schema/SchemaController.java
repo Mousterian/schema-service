@@ -23,7 +23,6 @@ public class SchemaController {
         this.dataSource = dataSource;
     }
 
-
     @RequestMapping("/schema")
     public Schema getSchema(@RequestParam(value="schemaName", defaultValue="test") String schemaName) {
         SchemaMetadataExtractor extractor = new SchemaMetadataExtractor(schemaName);
