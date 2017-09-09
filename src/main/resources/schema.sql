@@ -1,7 +1,7 @@
 
-create schema SOME_REGISTER;
+create schema something;
 
-create table SOME_REGISTER.TEST (
+create table something.test (
     id identity primary key,
     test_int int,
     test_bool boolean,

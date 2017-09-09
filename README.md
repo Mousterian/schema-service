@@ -5,5 +5,5 @@ cd src/main/resources/static
 bower install angular-schema-form
 
 ./gradlew bootrun
-curl localhost:8080/schema?schemaName=SOME_REGISTER
+curl http://localhost:8080/schema?schemaName=SOMETHING
 ~~~
