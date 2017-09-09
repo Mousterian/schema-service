@@ -1,9 +1,9 @@
 package com.kasei.schema;
 
-import com.kasei.schema.model.Column;
-import com.kasei.schema.model.DataType;
-import com.kasei.schema.model.Schema;
-import com.kasei.schema.model.Table;
+import com.kasei.schema.model.jdbc.Column;
+import com.kasei.schema.model.jdbc.DataType;
+import com.kasei.schema.model.jdbc.Schema;
+import com.kasei.schema.model.jdbc.Table;
 import org.springframework.jdbc.support.DatabaseMetaDataCallback;
 import org.springframework.jdbc.support.MetaDataAccessException;
 
