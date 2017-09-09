@@ -9,5 +9,6 @@ create table SOME_REGISTER.TEST (
     test_double double,
     test_time time,
     test_date date,
-    test_string varchar(255)
+    test_string varchar(255),
+    test_binary blob
 );
