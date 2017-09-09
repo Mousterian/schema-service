@@ -1,4 +1,4 @@
-package com.kasei.schema;
+package com.mousterian.schema;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

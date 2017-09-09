@@ -1,4 +1,4 @@
-package com.kasei.schema;
+package com.mousterian.schema;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package com.kasei.schema.model.jdbc;
+package com.mousterian.schema.model.jdbc;
 
 import java.sql.Types;
 

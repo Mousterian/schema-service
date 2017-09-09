@@ -1,4 +1,4 @@
-package com.kasei.schema.model.schemaform;
+package com.mousterian.schema.model.schemaform;
 
 import lombok.Data;
 

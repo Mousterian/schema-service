@@ -1,8 +1,8 @@
-package com.kasei.schema;
+package com.mousterian.schema;
 
 
-import com.kasei.schema.model.jdbc.Schema;
-import com.kasei.schema.model.schemaform.SchemaFormData;
+import com.mousterian.schema.model.jdbc.Schema;
+import com.mousterian.schema.model.schemaform.SchemaFormData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.jdbc.support.MetaDataAccessException;

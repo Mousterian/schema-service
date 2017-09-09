@@ -1,9 +1,9 @@
-package com.kasei.schema;
+package com.mousterian.schema;
 
-import com.kasei.schema.model.jdbc.Column;
-import com.kasei.schema.model.jdbc.DataType;
-import com.kasei.schema.model.jdbc.Schema;
-import com.kasei.schema.model.jdbc.Table;
+import com.mousterian.schema.model.jdbc.Column;
+import com.mousterian.schema.model.jdbc.DataType;
+import com.mousterian.schema.model.jdbc.Schema;
+import com.mousterian.schema.model.jdbc.Table;
 import org.springframework.jdbc.support.DatabaseMetaDataCallback;
 import org.springframework.jdbc.support.MetaDataAccessException;
 
