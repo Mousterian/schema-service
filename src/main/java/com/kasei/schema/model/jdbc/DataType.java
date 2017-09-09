@@ -1,4 +1,4 @@
-package com.kasei.schema.model;
+package com.kasei.schema.model.jdbc;
 
 import java.sql.Types;
 
@@ -11,7 +11,8 @@ public enum DataType {
     DOUBLE,
     TIME,
     DATE,
-    VARCHAR;
+    VARCHAR,
+    BLOB;
 
     public static DataType fromString(String dataType) {
 
@@ -40,6 +41,9 @@ public enum DataType {
 
             case Types.VARCHAR:
                 return VARCHAR;
+
+            case Types.BLOB:
+                return BLOB;
 
             default: {
                 throw new RuntimeException("SQL Data Type " + dataType + " not supported.");

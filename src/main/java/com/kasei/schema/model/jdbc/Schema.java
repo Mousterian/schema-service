@@ -1,4 +1,4 @@
-package com.kasei.schema.model;
+package com.kasei.schema.model.jdbc;
 
 import lombok.Data;
 
