@@ -16,5 +16,6 @@ create table something.test (
 create table something.test2 (
     registration_number int,
     contact_person_name varchar(255),
+    registration_complete boolean,
     description varchar(255)
 );

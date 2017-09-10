@@ -1,6 +1,7 @@
 package com.mousterian.schema;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.mousterian.schema.model.jdbc.Column;
 import com.mousterian.schema.model.jdbc.DataType;
 import com.mousterian.schema.model.jdbc.Schema;
@@ -8,12 +9,11 @@ import com.mousterian.schema.model.jdbc.Table;
 import com.mousterian.schema.model.schemaform.Model;
 import com.mousterian.schema.model.schemaform.SchemaFormData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.jdbc.support.MetaDataAccessException;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
 import java.util.*;
@@ -53,12 +53,15 @@ public class SchemaController {
         Schema jdbcSchema = getSchema(h2SchemaName);
 
         schemaFormData.setSchema(populateJsonSchema(jdbcSchema, h2TableName));
-
         schemaFormData.setForm(populateJsonForm(jdbcSchema, h2TableName));
-
         schemaFormData.setModel(new Model());
 
         return schemaFormData;
+    }
+
+    @PutMapping(value = "/data/{schema}/{table}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void insertRecord(@RequestBody MultiValueMap<String,String> body) {
+        System.out.println("data controller, received record: " + body);
     }
 
     private List<Object> populateJsonForm(Schema jdbcSchema, String tableName) {

@@ -10,5 +10,19 @@ app.controller('MainCtrl', function ($scope, $http) {
         $scope.model = response.data.model;
         $scope.$broadcast('schemaFormRedraw');
     });
+
+    $scope.submit = function() {
+
+//        var req = {
+//            method: 'PUT',
+//            url: '/data/something/test2',
+//            headers: {
+//                'Content-Type': "application/json"
+//            },
+//            data: { "model" : $scope.model }
+//        };
+//        $http(req);
+        $http.put("/data/something/test2", { "model" : $scope.model });
+    };
 });
 
