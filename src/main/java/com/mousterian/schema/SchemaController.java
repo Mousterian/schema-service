@@ -100,8 +100,12 @@ public class SchemaController {
 
                 for (Column column : table.getColumns()) {
                     Map<String,Object> fieldProperties = new LinkedHashMap<>();
+
+                    String prettyColumnName = column.getName().replace('_',' ').toLowerCase();
+                    prettyColumnName = Character.toUpperCase(prettyColumnName.charAt(0)) + prettyColumnName.substring(1);
+
                     // TO DO: pull these keys out into a constants class / enum
-                    fieldProperties.put("title", column.getName());
+                    fieldProperties.put("title", prettyColumnName);
                     fieldProperties.put("type", getJsonSchemaTypeForJdbcType(column.getType()));
 
                     // TO DO: when we add nullable support this should be conditional
