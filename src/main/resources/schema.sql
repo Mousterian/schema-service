@@ -12,3 +12,8 @@ create table something.test (
     test_string varchar(255),
     test_binary blob
 );
+
+create table something.test2 (
+    registration_number int,
+    description varchar(255)
+);

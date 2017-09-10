@@ -3,7 +3,7 @@ var app = angular.module('schema-service-ui', ['ngSanitize', 'schemaForm']);
 
 app.controller('MainCtrl', function ($scope, $http) {
 
-    $http.get("http://localhost:8080/test.json").then(function (response) {
+    $http.get("/schemaformdata/something/test2").then(function (response) {
         console.log('Got config response: ' + response.data)
         $scope.schema = response.data.schema;
         $scope.form = response.data.form;
