@@ -3,6 +3,7 @@ var app = angular.module('schema-service-ui', ['ngSanitize', 'schemaForm']);
 
 app.controller('MainCtrl', function ($scope, $http) {
 
+    // TO DO: make this a dynamic selection
     $http.get("/schemaformdata/something/test2").then(function (response) {
         console.log('Got config response: ' + response.data)
         $scope.schema = response.data.schema;
@@ -12,16 +13,7 @@ app.controller('MainCtrl', function ($scope, $http) {
     });
 
     $scope.submit = function() {
-
-//        var req = {
-//            method: 'PUT',
-//            url: '/data/something/test2',
-//            headers: {
-//                'Content-Type': "application/json"
-//            },
-//            data: { "model" : $scope.model }
-//        };
-//        $http(req);
+        // TO DO: make this a dynamic selection
         $http.put("/data/something/test2", { "model" : $scope.model });
     };
 });

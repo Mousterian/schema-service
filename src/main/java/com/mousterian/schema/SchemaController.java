@@ -1,7 +1,8 @@
 package com.mousterian.schema;
 
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mousterian.schema.model.jdbc.Column;
 import com.mousterian.schema.model.jdbc.DataType;
 import com.mousterian.schema.model.jdbc.Schema;
@@ -12,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.jdbc.support.MetaDataAccessException;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
+import java.io.IOException;
 import java.util.*;
 
 @RestController
@@ -23,11 +24,13 @@ public class SchemaController {
 
 
     private DataSource dataSource;
+    private ObjectMapper mapper;
 
     @Autowired
-    public SchemaController(DataSource dataSource){
+    public SchemaController(DataSource dataSource, ObjectMapper mapper){
 
         this.dataSource = dataSource;
+        this.mapper = mapper;
     }
 
     @RequestMapping("/schema")
@@ -60,8 +63,9 @@ public class SchemaController {
     }
 
     @PutMapping(value = "/data/{schema}/{table}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void insertRecord(@RequestBody MultiValueMap<String,String> body) {
-        System.out.println("data controller, received record: " + body);
+    public void insertRecord(@RequestBody String json) throws IOException {
+        ObjectNode node = mapper.readValue(json, ObjectNode.class);
+        System.out.println("data controller, received record: " + node);
     }
 
     private List<Object> populateJsonForm(Schema jdbcSchema, String tableName) {
