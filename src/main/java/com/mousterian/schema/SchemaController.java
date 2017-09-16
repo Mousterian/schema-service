@@ -1,6 +1,7 @@
 package com.mousterian.schema;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mousterian.schema.model.jdbc.Column;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 @RestController
@@ -63,9 +66,35 @@ public class SchemaController {
     }
 
     @PutMapping(value = "/data/{schema}/{table}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void insertRecord(@RequestBody String json) throws IOException {
+    public void insertRecord(@PathVariable String schema, @PathVariable String table, @RequestBody String json) throws IOException, SQLException {
         ObjectNode node = mapper.readValue(json, ObjectNode.class);
-        System.out.println("data controller, received record: " + node);
+        System.out.println("data controller, received record: " + node.toString());
+
+        List<String> columns = new ArrayList<>();
+        List<String> values = new ArrayList<>();
+        JsonNode model = node.findValue("model");
+        if (model.isObject()){
+            ObjectNode m  = (ObjectNode)model;
+            Iterator<Map.Entry<String, JsonNode>> fields = m.fields();
+            while (fields.hasNext()) {
+                Map.Entry<String, JsonNode> field = fields.next();
+                columns.add(field.getKey());
+                // TO DO; make not stringly typed.
+                values.add(field.getValue().toString());
+            }
+        }
+
+        Statement statement = dataSource.getConnection().createStatement();
+        String sql = "INSERT INTO " + schema + "." + table + "(";
+        // thank goodness this finally showed up in java 8
+        sql += String.join(",", columns);
+        sql += ") VALUES (";
+        sql += String.join(",", values);
+        sql += ");";
+        // this is ugly, but necessary, sql doesn't like double quotes around strings
+        sql = sql.replace("\"","'");
+        System.out.println("executing sql: " + sql);
+        statement.execute(sql);
     }
 
     private List<Object> populateJsonForm(Schema jdbcSchema, String tableName) {
